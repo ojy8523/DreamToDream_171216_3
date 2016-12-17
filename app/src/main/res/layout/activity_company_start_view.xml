@@ -18,11 +18,14 @@
         />
 
 
-    <Button
+    <ImageButton
+        android:layout_width="75dp"
+        android:layout_height="75dp"
         android:id="@+id/startSleep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="굿모닝"
+        android:src="@drawable/start_charity"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_marginBottom="23dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerInside"
+        android:background="#00000000"/>
 </RelativeLayout>

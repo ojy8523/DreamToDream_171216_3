@@ -1,12 +1,16 @@
 package com.example.seungkyu.dreamtodream;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -16,6 +20,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -25,6 +30,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Fragment;
 
+import me.relex.circleindicator.CircleIndicator;
+
 public class CompanyList extends AppCompatActivity {
 
     private ListView mDrawerList;
@@ -33,14 +40,22 @@ public class CompanyList extends AppCompatActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private String mActivityTitle;
 
-
+//뷰페이져 부분
+    CompanyList_MyPageAdapter myPageAdapter;
+    ViewPager pager;
+    Context context = this;
+    CompanyList_Sqlite companyListSqlite = new CompanyList_Sqlite(context);
+//뷰페이져 부분
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 21) {   //상태바 색
+            getWindow().setStatusBarColor(Color.parseColor("#FF48D1CC"));}
         setContentView(R.layout.activity_company_list);
+
 
         mDrawerList = (ListView)findViewById(R.id.navList);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -50,8 +65,6 @@ public class CompanyList extends AppCompatActivity {
         setupDrawer();
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
 
 
 
@@ -65,6 +78,28 @@ public class CompanyList extends AppCompatActivity {
         // 리스트뷰 참조 및 Adapter달기
         listview = (ListView) findViewById(R.id.listview1);
         listview.setAdapter(adapter);
+
+        //이미지 뷰페이저 넣는 부분///////////
+
+        companyListSqlite.getWritableDatabase();
+        companyListSqlite.InsertData();
+
+        String[] arrData = companyListSqlite.SelectData("1");
+        if (arrData[0].length() > 0) {
+            String Flag = arrData[1];
+        }
+
+        myPageAdapter = new CompanyList_MyPageAdapter(getSupportFragmentManager());
+
+        pager = (ViewPager) findViewById(R.id.pager);
+        pager.setAdapter(myPageAdapter);
+
+        CircleIndicator indicator = (CircleIndicator) findViewById(R.id.indicator);
+        indicator.setViewPager(pager);
+        pager.setOffscreenPageLimit(5);
+
+
+        //이미지 뷰페이저 넣는 부분///////////
 
 
 
@@ -142,13 +177,15 @@ public class CompanyList extends AppCompatActivity {
 
 
     private void addDrawerItems(){
-        String[] osArray = {"Android","ios","Windows"};
+        String[] osArray = {"Log out","Market","My info","Board"};
         mAdapter = new ArrayAdapter<String>(CompanyList.this, android.R.layout.simple_list_item_1,osArray);
         mDrawerList.setAdapter(mAdapter);
 
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getApplicationContext(), Board.class);
+                startActivity(intent);
                 Toast.makeText(CompanyList.this, "Time for an upgrade!", Toast.LENGTH_SHORT).show();
 
             }
@@ -161,7 +198,7 @@ public class CompanyList extends AppCompatActivity {
             /** Called when a drawer has settled in a completely open state. */
             public void onDrawerOpened(View drawerView) {
                 super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation!");
+                getSupportActionBar().setTitle("Etc");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -175,6 +212,9 @@ public class CompanyList extends AppCompatActivity {
 
         mDrawerToggle.setDrawerIndicatorEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        //mDrawerToggle.getDrawerArrowDrawable().setColor(getColor(R.color.mainColor));
+
     }
 
     protected void onPostCreate(Bundle savedInstanceState) {

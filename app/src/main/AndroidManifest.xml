@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        android:theme="@style/Theme.AppCompat.Light">
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +22,23 @@
         <activity android:name=".Signup" />
         <activity android:name=".CompanyList" />
         <activity android:name=".CompanyViewPage" />
-        <activity android:name=".StartSleep" />
+        <activity android:name=".StartCharity" />
         <activity android:name=".SplashPage" />
         <activity android:name=".SecondActivity" />
+        <activity android:name=".CharityBoardViewPage"/>
+        <activity android:name=".CharityRanking"/>
+        <activity android:name=".Board" />
+        <activity android:name=".WriteBoardPage"/>
+        <activity android:name=".BoardViewPage">
+        </activity>
+
+
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".MibandTest"></activity>
+
     </application>
 
 </manifest>

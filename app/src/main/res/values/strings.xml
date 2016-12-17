@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DreamToDream</string>
+    <string name="app_name">Sleep Us</string>
     <string name="appbar_scrolling_view_behavior">appbar_scrolling_view_behavior</string>
     <string name="open">open</string>
     <string name="close">close</string>
@@ -15,5 +15,6 @@
     <string name="title_activity_second">SecondActivity</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <color name="bg">#7B68EE</color>
 
 </resources>

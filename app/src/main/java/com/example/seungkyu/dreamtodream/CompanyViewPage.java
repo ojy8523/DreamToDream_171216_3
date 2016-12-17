@@ -3,26 +3,28 @@ package com.example.seungkyu.dreamtodream;
 import java.io.InputStream;
 import java.net.URL;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 
 
-public class CompanyViewPage extends AppCompatActivity {
-    Button startSleep;
+public class CompanyViewPage extends FragmentActivity {
+    ImageButton startSleep;
     ImageView mImgTrans;
     Bitmap mBitmap;
 
@@ -30,6 +32,12 @@ public class CompanyViewPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= 21) {   //상태바 색
+            getWindow().setStatusBarColor(Color.parseColor("#FF48D1CC"));}
+
+
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_company_start_view);
 
 
@@ -37,13 +45,13 @@ public class CompanyViewPage extends AppCompatActivity {
 
 
 
-        startSleep = (Button) findViewById(R.id.startSleep);
+        startSleep = (ImageButton) findViewById(R.id.startSleep);
         mImgTrans = (ImageView) findViewById(R.id.imgTranslate);
 
 
         startSleep.setOnClickListener(new View.OnClickListener(){
             public void onClick(View arg0){
-                Intent intent =  new Intent(getApplicationContext(),StartSleep.class);
+                Intent intent =  new Intent(getApplicationContext(),StartCharity.class);
                 startActivity(intent);
 
             }
